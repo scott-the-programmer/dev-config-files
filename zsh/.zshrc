@@ -1,39 +1,49 @@
-#Scott's zshrc config
-
 export ZSH="$HOME/.oh-my-zsh"
-
-ZSH_THEME="ys"
-
+ZSH_THEME="agnoster"
 #plugins
 plugins=(
     git
-    zsh-syntax-highlighting
     zsh-autosuggestions
+    zsh-syntax-highlighting
+    colored-man-pages
     )
-
 source $ZSH/oh-my-zsh.sh
 
-# Cool CD func
-lfcd() {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-    fi
-}
-
-#Useful git exports
-git config alias.change-commits '!'"f() { VAR=\$1; OLD=\$2; NEW=\$3; shift 3; git filter-branch --env-filter \"if [[ \\\"\$\`echo \$VAR\`\\\" = '\$OLD' ]]; then export \$VAR='\$NEW'; fi\" \$@; }; f "
-
-#Makes it cool
+#Handy Aliases
 alias load-zsh="source ~/.zshrc"
+alias zsh-load="source ~/.zshrc"
+alias vi="nvim"
+alias d="sudo docker"
+alias dc="docker-compose"
+alias nb="newsboat"
+
+#Dev exports
+export PATH=$HOME/AWS:$PATH
+export PATH=$HOME/.dotnet/tools:$PATH
+export PATH=/usr/local/bin/pwsh:$PATH
+export PATH=$HOME/flutter/bin:$PATH
+export PATH=$HOME/github/pomo:$PATH
+
+## Node 
+export NVM_DIR=$HOME/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
+# make GNU commands available
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+
+#Go
+export GOPATH=$HOME/golang
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
 
 #OS exports
 export BROWSER='firefox'
-export EDITOR='nano'
-export TERMINAL='hyper'
+export EDITOR='nvim'
+export TERMINAL='iterm2'
+export FLUTTER_ROOT="$HOME/flutter"   
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
